@@ -1,4 +1,4 @@
-libtk8.6
+libtk8.6.so
 openpyxl
 lxml
 bs4
