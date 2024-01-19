@@ -1,5 +1,0 @@
-libtk8.6
-openpyxl
-lxml
-bs4
-ofxparse
