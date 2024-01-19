@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-import openpyxl
+
 import streamlit as st
 from tkinter import Tk
 from tkinter import filedialog
@@ -9,6 +9,7 @@ from lxml import etree
 from bs4 import BeautifulSoup
 from ofxparse import OfxParser
 import io
+import openpyxl
 
 def analisar_ofx(conteudo_ofx):
     indice_inicio = conteudo_ofx.find(b'<OFX>')
