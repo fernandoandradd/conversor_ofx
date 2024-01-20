@@ -45,7 +45,7 @@ def converter_ofx_para_excel(conteudo_ofx):
     planilha_excel = openpyxl.Workbook()
     planilha_ativa = planilha_excel.active
 
-    cabecalho = ["TIPO TRANSAÇÃO", "DATA TRANSAÇÃO", "VALOR", "HISTÓRICO"]
+    cabecalho = ["TIPO TRANSAÇÃO", "DATA TRANSAÇÃO", "VALOR", "HISTÓRICO", "DATA", "DEBITO", "CREDITO", "VALOR", "HISTORICO"]
     planilha_ativa.append(cabecalho)
 
     for linha in dados:
