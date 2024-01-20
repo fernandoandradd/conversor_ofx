@@ -119,9 +119,9 @@ def converter_ofx_para_excel_bb(conteudo_ofx_bb):
 
     return planilha_excel_bb
 
-def save_excel_bb(planilha_excel, file_name='output.xlsx'):
+def save_excel_bb(planilha_excel_bb, file_name='output.xlsx'):
     buffer = io.BytesIO()
-    planilha_excel.save(buffer)
+    planilha_excel_bb.save(buffer)
     buffer.seek(0)
     return buffer
 
@@ -171,7 +171,7 @@ def main():
 
             planilha_excel_bb = save_excel_bb(planilha_excel_bb)
 
-            st.download_button(label='📥 Download Current Result',
+            st.download_button(label='📥 resultado diferente',
                                data=planilha_excel_bb,
                                file_name='df_test.xlsx')
 
