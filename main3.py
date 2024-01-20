@@ -1,5 +1,5 @@
 import xml.etree.ElementTree as ET
-
+import openpyxl
 import streamlit as st
 from tkinter import Tk
 from tkinter import filedialog
@@ -9,7 +9,6 @@ from lxml import etree
 from bs4 import BeautifulSoup
 from ofxparse import OfxParser
 import io
-import openpyxl
 
 def analisar_ofx(conteudo_ofx):
     indice_inicio = conteudo_ofx.find(b'<OFX>')
@@ -56,13 +55,11 @@ def converter_ofx_para_excel(conteudo_ofx):
 
     return planilha_excel
 
-def obter_caminho_salvar():
-    caminho_salvar = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Arquivos Excel", "*.xlsx")])
-    root = Tk()  # Criar uma instância de Tk para poder chamar destroy()
-    root.destroy()
-    return caminho_salvar
-
-
+def save_excel(planilha_excel, file_name='output.xlsx'):
+    buffer = io.BytesIO()
+    planilha_excel.save(buffer)
+    buffer.seek(0)
+    return buffer
 # -------------------------
 def preprocessar_ofx_bb(conteudo_ofx_bb):
     # Substituir quebras de linha nas tags de data específicas do BB
@@ -113,6 +110,7 @@ def converter_ofx_para_excel_bb(conteudo_ofx_bb):
     planilha_excel_bb = openpyxl.Workbook()
     planilha_ativa_bb = planilha_excel_bb.active
 
+
     cabecalho_bb = ["TIPO TRANSAÇÃO", "DATA TRANSAÇÃO", "VALOR", "HISTÓRICO"]
     planilha_ativa_bb.append(cabecalho_bb)
 
@@ -148,15 +146,17 @@ def main():
 
         planilha_excel = converter_ofx_para_excel(conteudo_ofx)
 
+
         if planilha_excel is not None:
             st.success("Conversão concluída. Agora você pode escolher onde salvar o arquivo Excel.")
 
-            if st.button("Exportar para Excel"):
-                caminho_salvar = obter_caminho_salvar()
+            planilha_excel = save_excel(planilha_excel)
 
-                if caminho_salvar:
-                    planilha_excel.save(caminho_salvar)
-                    st.success(f"Arquivo Excel salvo em {caminho_salvar}")
+            st.download_button(label='📥 Download Current Result',
+                               data=planilha_excel,
+                               file_name='df_test.xlsx')
+
+
 
     st.subheader(":blue[Converter OFX Banco do Brasil - BB]")
 
