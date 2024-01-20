@@ -109,7 +109,7 @@ def converter_ofx_para_excel_bb(conteudo_ofx_bb):
     planilha_ativa_bb = planilha_excel_bb.active
 
 
-    cabecalho_bb = ["TIPO TRANSAÇÃO", "DATA TRANSAÇÃO", "VALOR", "HISTÓRICO"]
+    cabecalho_bb = ["TIPO TRANSAÇÃO", "DATA TRANSAÇÃO", "VALOR", "HISTÓRICO", "DATA", "DEBITO", "CREDITO", "VALOR", "HISTORICO"]
     planilha_ativa_bb.append(cabecalho_bb)
 
     for linha in dados_bb:
@@ -149,9 +149,9 @@ def main():
 
             planilha_excel = save_excel(planilha_excel)
 
-            st.download_button(label='📥 Download Current Result',
+            st.download_button(label='📥 Download do aquivo do BNB',
                                data=planilha_excel,
-                               file_name='df_test.xlsx')
+                               file_name='Extrato BNB.xlsx')
 
 
 
@@ -169,9 +169,9 @@ def main():
 
             planilha_excel_bb = save_excel_bb(planilha_excel_bb)
 
-            st.download_button(label='📥 resultado diferente',
+            st.download_button(label='📥 Download do aquivo do BB',
                                data=planilha_excel_bb,
-                               file_name='df_test.xlsx')
+                               file_name='Extrato BB.xlsx')
 
 if __name__ == "__main__":
     main()
