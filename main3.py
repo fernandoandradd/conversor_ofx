@@ -119,12 +119,11 @@ def converter_ofx_para_excel_bb(conteudo_ofx_bb):
 
     return planilha_excel_bb
 
-def obter_caminho_salvar_bb():
-
-    caminho_salvar_bb = filedialog.asksaveasfilename(defaultextension=".xlsx", filetypes=[("Arquivos Excel", "*.xlsx")])
-    root = Tk()  # Criar uma instância de Tk para poder chamar destroy()
-    root.destroy()
-    return caminho_salvar_bb
+def save_excel_bb(planilha_excel, file_name='output.xlsx'):
+    buffer = io.BytesIO()
+    planilha_excel.save(buffer)
+    buffer.seek(0)
+    return buffer
 
 # ------------------------------------------
 
@@ -170,12 +169,11 @@ def main():
         if planilha_excel_bb is not None:
             st.success("Conversão concluída. Agora você pode escolher onde salvar o arquivo Excel.")
 
-            if st.button("Exportar para Excel - BB"):
-                caminho_salvar_bb = obter_caminho_salvar_bb()
+            planilha_excel_bb = save_excel_bb(planilha_excel_bb)
 
-                if caminho_salvar_bb:
-                    planilha_excel_bb.save(caminho_salvar_bb)
-                    st.success(f"Arquivo Excel salvo em {caminho_salvar_bb}")
+            st.download_button(label='📥 Download Current Result',
+                               data=planilha_excel_bb,
+                               file_name='df_test.xlsx')
 
 if __name__ == "__main__":
     main()
